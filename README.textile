@@ -52,6 +52,7 @@ Understanding Erlang: Language, Semantics of code
   function overloading or even defmulti but defmulti is closest
 * syntatic: comma, semi-colon; and period.
 * data types: numbers, atoms, tuples, lists and strings
+* records, tuples with a type
 
 Understanding Erlang: Runtime Semantics
 
@@ -67,13 +68,21 @@ Lessons Learned, some learned the hard way
 * erlang cookie
 * data types: JSON challenges: strings are arrays of ints
 * debugging: ?INFO_MSG(),
-* debugging: ?INFO_MSG(),
 * debugging: mod_restful_debug: capture live data (vars) like we do in Clojure
+* debugging: query a gen_fsm for it's state
 * iterating: shell, interacting with code
 * iterating: remote shell, connect to a running erlang node
 * iterating: using ejabberdctl debug
 * iterating: make sure the build only builds what you changed
 * iterating: using ejabberdctl live
+
+Internals of MUC that we reverse engineered:
+
+* MUC room is managed by a process
+* that process stores it's configuration in mnesia
+* list of rooms is persisted in mnesia
+* the list of users and the messages are in the room state only
+  only in memory
 
 To R&D:
 
