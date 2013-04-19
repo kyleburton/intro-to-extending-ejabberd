@@ -88,3 +88,8 @@ To R&D:
 
 * recompile and hot reload code: 'code replacement' or 'release handling'
 
+
+Authors:
+
+* Kyle Burton
+* Paul Santa Clara
