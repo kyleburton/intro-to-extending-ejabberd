@@ -1,0 +1,74 @@
+h1. A Journey into Extending Jabber
+
+We incorporate XMPP into our product to do multi-user chat.
+
+For this we use eJabberd, an Erlang based XMPP server.
+
+* eJabberd supports clustering (standard erlang and mnesia clustering)
+* eJabberd supports multi-user-chat (plugin: mod_muc)
+
+We needed to be able to get information out of Jabber from our JVM based
+services:
+
+* see who is currently in a room
+  if there is no counterparty for a user, we actively try to find one that is
+  on-call and send them into the room
+* peek at the messages in a room
+* post a message to the room on behalf of a user
+  this was for integrating SMS send/recv into the room
+
+We thought there were a few approaches:
+
+* extend the XMPP protocol to support all of these
+  PRO: fits into the existing clients (bosh, smack)
+  CON: existing client (smack) is flaky/unreliable
+  CON: we don't want normal users to be able to exercise
+       the new features.
+* create an alternate interface into jabber
+
+We found mod_resfult_admin, so we chose to go with an alternate interface:
+HTTP. mod_resfult_admin already allowed for registering users (which is
+something we need to do, but can via smack), and looked like it could be easily
+extended to 
+
+Understanding eJabberd through the standard OTP Behaviors:
+
+* gen_server
+* gen_fsm
+* gen_event
+* supervisor
+
+Understanding Erlang: Language, Semantics of code
+
+* expression based language
+* single assignment
+* pattern matching and destructuring
+* single funciton, multiple clauses does not exactly map to polymorphisim,
+  function overloading or even defmulti but defmulti is closest
+* syntatic: comma, semi-colon; and period.
+* data types: numbers, atoms, tuples, lists and strings
+
+Understanding Erlang: Runtime Semantics
+
+* processes
+* message passing
+* recursion and handling state in a single-assginment world
+* mnesia, data storage and clustering
+* iolists, and Erlang's sprintf
+* The erlang path, and finding compiled code.
+
+Lessons Learned, some learned the hard way
+
+* erlang cookie
+* data types: JSON challenges: strings are arrays of ints
+* debugging: ?INFO_MSG(),
+* debugging: ?INFO_MSG(),
+* debugging: mod_restful_debug: capture live data (vars) like we do in Clojure
+* iterating: shell, interacting with code
+* iterating: remote shell, connect to a running erlang node
+* iterating: using ejabberdctl debug
+* iterating: make sure the build only builds what you changed
+* iterating: using ejabberdctl live
+
+To R&D:
+* recompile and hot reload code: 'code replacement' or 'release handling'
