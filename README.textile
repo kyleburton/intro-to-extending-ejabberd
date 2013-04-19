@@ -31,10 +31,10 @@ We thought there were a few approaches:
        able to participate
 * create an alternate interface into jabber
 
-We found mod_resfult_admin, so we chose to go with an alternate interface:
-HTTP. mod_resfult_admin already allowed for registering users (which is
+We found mod_restful_admin, so we chose to go with an alternate interface:
+HTTP. mod_restful_admin already allowed for registering users (which is
 something we need to do, but can via smack), and looked like it could be easily
-extended to 
+extended to do what we needed.
 
 Understanding eJabberd through the standard OTP Behaviors:
 
