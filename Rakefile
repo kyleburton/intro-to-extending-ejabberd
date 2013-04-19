@@ -51,9 +51,17 @@ namespace :ejaberd do
         unless File.exist? "Makefile"
           system! "./configure --prefix=#{install_path}"
         end
-        system! "make all"
+        system! "make"
         system! "make install"
       end
     end
+    puts ""
+    puts ""
+    puts ""
+    puts ("*" * 80)
+    puts ""
+    puts "./software/sbin/ejabberdctl start"
+    puts "EJABBERD_BYPASS_WARNINGS=true ./software/sbin/ejabberdctl debug"
+    puts "EJABBERD_BYPASS_WARNINGS=true ./software/sbin/ejabberdctl live"
   end
 end
