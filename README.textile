@@ -1,6 +1,6 @@
 h1. A Journey into Extending Jabber
 
-We incorporate XMPP into our product to do multi-user chat.
+We incorporated XMPP into our product to do multi-user chat.
 
 For this we use eJabberd, an Erlang based XMPP server.
 
@@ -13,7 +13,8 @@ services:
 * see who is currently in a room
   if there is no counterparty for a user, we actively try to find one that is
   on-call and send them into the room
-* peek at the messages in a room
+* peek at the messages in a room: so we could write tests for our system to
+  ensure we were mapping sms <-> xmpp
 * post a message to the room on behalf of a user
   this was for integrating SMS send/recv into the room
 
@@ -71,4 +72,6 @@ Lessons Learned, some learned the hard way
 * iterating: using ejabberdctl live
 
 To R&D:
+
 * recompile and hot reload code: 'code replacement' or 'release handling'
+
