@@ -25,6 +25,10 @@ We thought there were a few approaches:
   CON: existing client (smack) is flaky/unreliable
   CON: we don't want normal users to be able to exercise
        the new features.
+  CON: eJabberd prevents the same user from logging into a room multiple times:
+       this is in conflict with our distributed system
+  CON: extending XMPP would be _complex_ and standard clients may no longer be
+       able to participate
 * create an alternate interface into jabber
 
 We found mod_resfult_admin, so we chose to go with an alternate interface:
