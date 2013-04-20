@@ -33,6 +33,12 @@ def install_path
   File.dirname(__FILE__) + "/software/ejabberd"
 end
 
+task :default => [:help]
+
+task :help do
+  system!("rake -T")
+end
+
 namespace :ejaberd do
   desc "install"
   task :install do

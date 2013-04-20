@@ -93,3 +93,49 @@ Authors:
 
 * Kyle Burton
 * Paul Santa Clara
+
+
+h1. Running the Code
+
+h3. Requirements
+
+The code in this repository assumes that you have Erlang already installed.
+Ruby's `rake` utiliity must be installed, is used for automating and building.
+The included Rakefile will download and install eJabberd into a self-contained
+directory for working through the examples.
+
+h3. Installing eJabberd
+
+    rake ejabberd:install
+
+h3. Running eJabberd
+
+eJabberd can be run in the background as a daemon, or in the foreground.  If it
+is run in the background, you can still interact with it by launching
+`ejabberdctl debug`.  To run eJabberd, run `ejabberdctl start`.  After
+installation, `ejabberdctl` will be located in `./software/ejabberd/sbin/ejabberdctl`.
+
+h1. Recipies / Cheatsheet:
+
+h3. Interactive REPL/Shell:
+
+    erl
+    erl -name test1@localhost
+    erl -sname test1
+
+h3. Find your erlang ROOT:
+
+   init:get_argument(root).
+
+h3. Find your erlang node's cookie:
+
+   erlang:get_cookie().
+
+h3. The nodes you're clustered with:
+
+   nodes().
+
+h3. Ping another node, must have the same cookie, to cluster with it:
+
+   net_adm:ping(test2@localhost).
+
