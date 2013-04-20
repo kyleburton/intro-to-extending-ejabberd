@@ -15,6 +15,8 @@
     get_room_history/1,
     get_room_occupants/1,
     save_room_state/2,
+    save_all_room_state/1,
+    restore_all_room_state/1,
     load_room_state/1,
     restore_room_history_from_file/1,
     restore_room_history/2]).
@@ -28,6 +30,10 @@ join(OtherNode) ->
   application:start(mnesia),
   mnesia:change_config(extra_db_nodes, [OtherNode]),
   local_init().
+
+all_muc_rooms() ->
+  TableName = muc_room,
+  mnesia:dirty_all_keys(TableName).
 
 list_rooms() ->
   TableName = muc_room,
@@ -86,6 +92,20 @@ save_room_state(RoomName, Path) ->
   FileName = string:concat(Path, string:join(["room", RName, SName, "state"], ".")),
   RoomInfo = {RoomName,state,State},
   file:write_file(FileName, erlang:term_to_binary(RoomInfo)).
+
+save_all_room_state(Path) ->
+  lists:foreach(fun (RoomName) ->
+        save_room_state(RoomName, Path)
+    end,
+    all_muc_rooms()).
+
+restore_all_room_state(Path) ->
+  Pattern = string:concat(Path,"/room.*.state"),
+  ?INFO_MSG("Path=~p all state files: ~p~n", [Path, filelib:wildcard(Pattern)]),
+  lists:foreach(fun (FileName) ->
+        restore_room_history_from_file(FileName)
+    end,
+    filelib:wildcard(Pattern)).
 
 load_room_state(FileName) ->
   {ok, Data} = file:read_file(FileName),
