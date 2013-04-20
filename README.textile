@@ -100,7 +100,7 @@ h1. Running the Code
 h3. Requirements
 
 The code in this repository assumes that you have Erlang already installed.
-Ruby's `rake` utiliity must be installed, is used for automating and building.
+Ruby's @rake@ utiliity must be installed, is used for automating and building.
 The included Rakefile will download and install eJabberd into a self-contained
 directory for working through the examples.
 
@@ -112,8 +112,8 @@ h3. Running eJabberd
 
 eJabberd can be run in the background as a daemon, or in the foreground.  If it
 is run in the background, you can still interact with it by launching
-`ejabberdctl debug`.  To run eJabberd, run `ejabberdctl start`.  After
-installation, `ejabberdctl` will be located in `./software/ejabberd/sbin/ejabberdctl`.
+@ejabberdctl debug@.  To run eJabberd, run @ejabberdctl start@.  After
+installation, @ejabberdctl@ will be located in @./software/ejabberd/sbin/ejabberdctl@.
 
 h1. Recipies / Cheatsheet:
 
