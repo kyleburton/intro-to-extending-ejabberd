@@ -43,6 +43,10 @@ Understanding eJabberd through the standard OTP Behaviors:
 * gen_event
 * supervisor
 
+mod_muc_room's record structure:
+
+  ./software/build/ejabberd-2.1.12/src/mod_muc/mod_muc_room.hrl
+
 Understanding Erlang: Language, Semantics of code
 
 * expression based language
@@ -131,6 +135,10 @@ h3. Find your erlang node's cookie:
 
    erlang:get_cookie().
 
+h3. Get current node's name
+
+   node().
+
 h3. The nodes you're clustered with:
 
    nodes().
@@ -138,4 +146,16 @@ h3. The nodes you're clustered with:
 h3. Ping another node, must have the same cookie, to cluster with it:
 
    net_adm:ping(test2@localhost).
+
+
+h1. Tutorials
+
+* Interact with the Shell: @erl@
+* Create a module
+* Compile and load
+* Connect 2 Nodes
+* Mnesia: Starting mnesia
+* Mnesia: Creating tables, insertion and querying.
+* Mnesia: Clustering 2 Nodes
+
 

@@ -1,6 +1,14 @@
+require 'socket'
+require 'erb'
+
+task :default => [:help]
+
 $config = {
   :ejabberd => {
     :url => 'http://www.process-one.net/downloads/ejabberd/2.1.12/ejabberd-2.1.12.tgz',
+  },
+  'reveal.js' => {
+    :git => "https://github.com/hakimel/reveal.js.git"
   }
 }
 
@@ -33,13 +41,34 @@ def install_path
   File.dirname(__FILE__) + "/software/ejabberd"
 end
 
-task :default => [:help]
 
 task :help do
   system!("rake -T")
 end
 
-namespace :ejaberd do
+desc "Run local webserver"
+task :server do
+  system %Q|ruby -r webrick -e "s = WEBrick::HTTPServer.new(:Port => 9090, :DocumentRoot => Dir.pwd); trap('INT') { s.shutdown }; s.start"|
+
+end
+
+desc "install and build all dependencies"
+task :install => ["ejabberd:install", "revealjs:install"] do
+  # execute dependencies
+end
+
+namespace :revealjs do
+  desc "install"
+  task :install do
+    chdir! "software" do
+      unless File.exist? "reveal.js"
+        system! "git clone #{$config['reveal.js'][:git]}"
+      end
+    end
+  end
+end
+
+namespace :ejabberd do
   desc "install"
   task :install do
     download_ejabberd
@@ -69,5 +98,40 @@ namespace :ejaberd do
     puts "./software/sbin/ejabberdctl start"
     puts "EJABBERD_BYPASS_WARNINGS=true ./software/sbin/ejabberdctl debug"
     puts "EJABBERD_BYPASS_WARNINGS=true ./software/sbin/ejabberdctl live"
+
+    Rake::Task["ejabberd:install_config_files"].invoke
+  end
+
+  desc "Install jabber configuration files"
+  task :install_config_files do
+
+    # install configuration files
+    Dir['config/*.erb'].each do |src|
+      dst = "software/ejabberd/etc/ejabberd/#{File.basename(src,'.erb')}"
+      props = OpenStruct.new
+      props.hostname = Socket.gethostname
+      File.open(dst, "w") do |f|
+        result = ERB.new(File.read(src), 0, '>').result
+        puts "Rendering and installing #{src} => #{dst}"
+        f.write result
+      end
+    end
+  end
+end
+
+desc "build"
+task :build do
+  include_dirs = %w[../software/build/ejabberd-2.1.12/src/ ../software/build/ejabberd-2.1.12/src/mod_muc/]
+  chdir! "src" do
+    cmd = "erlc #{include_dirs.map {|d| "-I #{d}"}.join(" ")} #{Dir['*.erl'].join(" ")}"
+    system! cmd
+    system! "cp *.beam ../software/ejabberd/lib/ejabberd/ebin/"
+    #Dir['*.erl'].each do |f|
+    #  cmd = "erlc #{include_dirs.map {|d| "-I #{d}"}.join(" ")} #{f}"
+    #  puts cmd
+    #  system! cmd
+    #  FileUtils.cp "#{File.basename(f,'.erl')}.beam", "../software/ejabberd/lib/ejabberd/ebin/"
+    #end
+    puts "l(muc_interact)."
   end
 end
