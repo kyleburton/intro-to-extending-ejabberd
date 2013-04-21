@@ -177,3 +177,37 @@ task :build do
   puts "nl(muc_interact)."
 end
 
+namespace :rest do
+  namespace :room do
+    desc "room occupants"
+    task :occupants, :room do |t,args|
+      room_name = args[:room] || 'room1'
+      system! "curl", "http://localhost:8088/api/admin/room/#{room_name}/occupants?key=#{$config[:api_key]}"
+      puts ""
+    end
+
+    desc "room messages"
+    task :messages, :room do |t,args|
+      room_name = args[:room] || 'room1'
+      system! "curl", "http://localhost:8088/api/admin/room/#{room_name}/messages?key=#{$config[:api_key]}"
+      puts ""
+    end
+
+    desc "post message"
+    task :message, :room, :from, :friendly_from, :body do |t,args|
+      room_name     = args[:room]
+      from          = args[:from]
+      friendly_from = args[:friendly_from]
+      body          = args[:body]
+      system! <<-END
+curl -v \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '{"key":"#{$config[:api_key]}","body":"#{body}","from": "#{from}", "friendly_from": "#{friendly_from}"}' \
+  http://localhost:8088/api/admin/room/#{room_name}/message
+      END
+      puts ""
+    end
+  end
+end
