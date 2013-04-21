@@ -65,7 +65,7 @@ task :server do
 end
 
 desc "install and build all dependencies"
-task :install => ["ejabberd:install", "revealjs:install", "mod_restful:install"] do
+task :install => ["ejabberd:install", "revealjs:install", "mod_restful:install", "build"] do
   # execute dependencies
 end
 
