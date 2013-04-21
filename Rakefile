@@ -155,6 +155,10 @@ end
 
 desc "build"
 task :build do
+  chdir! "software/build/ejabberd/src/mod_muc" do
+    system! "make"
+  end
+
   jabber_src_path = "#{File.dirname(__FILE__)}/software/build/ejabberd-2.1.12/src"
   include_dirs = %W[#{jabber_src_path} #{File.dirname(__FILE__)}/software/build/ejabberd-2.1.12/src/mod_muc]
   ejabberd_includes = include_dirs.map {|d| "-I #{d}"}.join(" ")
