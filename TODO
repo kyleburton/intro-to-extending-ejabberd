@@ -1,3 +1,4 @@
-Enahnce mod_muc_room to handle an add_message_to_history event see
-mod_restful/src/mod_restful_admin.erl:157 for an example of the call.
-  https://github.com/relaynetwork/mod_restful
+add rake tasks for the REST calls
+  GET  occupants, messages
+  POST message to room
+Tests
