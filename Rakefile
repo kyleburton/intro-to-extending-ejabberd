@@ -1,5 +1,13 @@
 require 'socket'
 require 'erb'
+# require 'ruby-debug'
+
+# see http://stackoverflow.com/questions/3242470/problem-using-openstruct-with-erb
+class ErbBinding < OpenStruct
+  def get_binding
+    binding
+  end
+end
 
 task :default => [:help]
 
@@ -9,7 +17,11 @@ $config = {
   },
   'reveal.js' => {
     :git => "https://github.com/hakimel/reveal.js.git"
-  }
+  },
+    :mod_restful => {
+    :git => 'git@github.com:relaynetwork/mod_restful.git'
+  },
+  :api_key => "1l0gls94hajw24evjclz48e23k9l5q9zyt2feufhtitulyxzkoe"
 }
 
 def chdir! path
@@ -53,7 +65,7 @@ task :server do
 end
 
 desc "install and build all dependencies"
-task :install => ["ejabberd:install", "revealjs:install"] do
+task :install => ["ejabberd:install", "revealjs:install", "mod_restful:install"] do
   # execute dependencies
 end
 
@@ -65,6 +77,26 @@ namespace :revealjs do
         system! "git clone #{$config['reveal.js'][:git]}"
       end
     end
+  end
+end
+
+namespace :mod_restful do
+  desc "install"
+  task :install do
+    chdir! "software/build" do
+      unless File.exist? "mod_restful"
+        system! "git clone #{$config[:mod_restful][:git]}"
+      end
+    end
+  end
+end
+
+namespace :erlang do
+  desc "start an erlang shell (erl) that can cluster with the running ejabberd"
+  task :shell, :cookie do |t,args|
+    erlang_cookie = args[:cookie] || File.read('./software/ejabberd/var/lib/ejabberd/.erlang.cookie') || File.read("#{ENV['HOME']}/.erlang.cookie")
+    puts "muc_interact:join_ejabberd(ejabberd@#{Socket.gethostname})."
+    system! "erl -sname shell1@graphene -setcookie #{erlang_cookie} -pa ./software/ejabberd/lib/ejabberd/ebin/"
   end
 end
 
@@ -108,11 +140,13 @@ namespace :ejabberd do
     # install configuration files
     Dir['config/*.erb'].each do |src|
       dst = "software/ejabberd/etc/ejabberd/#{File.basename(src,'.erb')}"
-      props = OpenStruct.new
+      props = ErbBinding.new
       props.hostname = Socket.gethostname
+      props.api_key = $config[:api_key]
+      vars_binding = props.send(:get_binding)
+      result = ERB.new(File.read(src), 0, '>').result(vars_binding)
+      puts "Rendering and installing #{src} => #{dst}"
       File.open(dst, "w") do |f|
-        result = ERB.new(File.read(src), 0, '>').result
-        puts "Rendering and installing #{src} => #{dst}"
         f.write result
       end
     end
@@ -121,17 +155,21 @@ end
 
 desc "build"
 task :build do
-  include_dirs = %w[../software/build/ejabberd-2.1.12/src/ ../software/build/ejabberd-2.1.12/src/mod_muc/]
+  jabber_src_path = "#{File.dirname(__FILE__)}/software/build/ejabberd-2.1.12/src"
+  include_dirs = %W[#{jabber_src_path} #{File.dirname(__FILE__)}/software/build/ejabberd-2.1.12/src/mod_muc]
+  ejabberd_includes = include_dirs.map {|d| "-I #{d}"}.join(" ")
   chdir! "src" do
-    cmd = "erlc #{include_dirs.map {|d| "-I #{d}"}.join(" ")} #{Dir['*.erl'].join(" ")}"
+    cmd = "erlc #{ejabberd_includes} *.erl"
     system! cmd
-    system! "cp *.beam ../software/ejabberd/lib/ejabberd/ebin/"
-    #Dir['*.erl'].each do |f|
-    #  cmd = "erlc #{include_dirs.map {|d| "-I #{d}"}.join(" ")} #{f}"
-    #  puts cmd
-    #  system! cmd
-    #  FileUtils.cp "#{File.basename(f,'.erl')}.beam", "../software/ejabberd/lib/ejabberd/ebin/"
-    #end
-    puts "l(muc_interact)."
+    system! "cp *.beam #{File.dirname(__FILE__)}/software/ejabberd/lib/ejabberd/ebin/"
   end
+
+  chdir! "software/build/mod_restful/src" do
+    cmd = "erlc #{ejabberd_includes} -pa #{jabber_src_path} -pa . -I .. -I ../include *.erl"
+    system! cmd
+    system! "cp *.beam #{File.dirname(__FILE__)}/software/ejabberd/lib/ejabberd/ebin/"
+  end
+
+  puts "nl(muc_interact)."
 end
+

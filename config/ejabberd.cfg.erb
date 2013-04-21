@@ -164,7 +164,9 @@
 			 http_poll,
 			 %%register,
 			 web_admin
-			]}
+                       ]},
+  {8088, ejabberd_http,
+    [{request_handlers, [{["api"], mod_restful}]}]}
 
  ]}.
 
@@ -584,7 +586,19 @@
   {mod_stats,    []},
   {mod_time,     []},
   {mod_vcard,    []},
-  {mod_version,  []}
+  {mod_version,  []},
+
+  {mod_restful, [
+      {api,
+        [
+          {["admin"], mod_restful_admin, [
+              {key, "<%= api_key %>"},
+              {allowed_commands, [register, unregister]}
+            ]},
+          {["register"], mod_restful_register, [{key, "<%= api_key %>"}]}
+        ]
+      }
+    ]}
  ]}.
 
 %%

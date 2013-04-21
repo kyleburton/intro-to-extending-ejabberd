@@ -3,12 +3,14 @@
 %-include("ejabberd.hrl").
 %-include("jlib.hrl").
 -include("mod_muc_room.hrl").
+-include("ejabberd.hrl").
 
 
 -export([
     list_rooms/0,
     create_room/1,
-    join/1,
+    join_and_initialize_mnesia/1,
+    join_ejabberd/1,
     get_room_config/1,
     get_room_pid/1,
     get_room_state/1,
@@ -24,12 +26,18 @@
 local_init() ->
     mnesia:change_table_copy_type(schema, node(), disc_copies).
 
-join(OtherNode) ->
+join_and_initialize_mnesia(OtherNode) ->
   mnesia:stop(),
   mnesia:delete_schema([node()]),
   application:start(mnesia),
   mnesia:change_config(extra_db_nodes, [OtherNode]),
   local_init().
+
+join_ejabberd(OtherNode) ->
+  net_adm:ping(OtherNode),
+  application:start(mnesia),
+  mnesia:change_config(extra_db_nodes, [OtherNode]).
+
 
 all_muc_rooms() ->
   TableName = muc_room,
@@ -101,7 +109,7 @@ save_all_room_state(Path) ->
 
 restore_all_room_state(Path) ->
   Pattern = string:concat(Path,"/room.*.state"),
-  ?INFO_MSG("Path=~p all state files: ~p~n", [Path, filelib:wildcard(Pattern)]),
+  %% ?INFO_MSG("Path=~p all state files: ~p~n", [Path, filelib:wildcard(Pattern)]),
   lists:foreach(fun (FileName) ->
         restore_room_history_from_file(FileName)
     end,
