@@ -69,6 +69,7 @@ Understanding Erlang: Runtime Semantics
 
 Lessons Learned, some learned the hard way
 
+* mnesia is tied to the node name(!)
 * erlang cookie
 * data types: JSON challenges: strings are arrays of ints
 * debugging: ?INFO_MSG(),
@@ -91,7 +92,6 @@ Internals of MUC that we reverse engineered:
 To R&D:
 
 * recompile and hot reload code: 'code replacement' or 'release handling'
-
 
 Authors:
 
