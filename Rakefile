@@ -96,7 +96,7 @@ namespace :erlang do
   task :shell, :cookie do |t,args|
     erlang_cookie = args[:cookie] || File.read('./software/ejabberd/var/lib/ejabberd/.erlang.cookie') || File.read("#{ENV['HOME']}/.erlang.cookie")
     puts "muc_interact:join_ejabberd(ejabberd@#{Socket.gethostname})."
-    system! "erl -sname shell1@graphene -setcookie #{erlang_cookie} -pa ./software/ejabberd/lib/ejabberd/ebin/"
+    system! "erl -sname shell1@localhost -setcookie #{erlang_cookie} -pa ./software/ejabberd/lib/ejabberd/ebin/"
   end
 end
 
