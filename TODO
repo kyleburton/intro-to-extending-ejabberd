@@ -1,3 +1,20 @@
+* Typo on slide #3 messags
+* Typo on slide #23 atable
+* add github url to slides
+* add prop lists to slide #14
+* move mod_restful_debug to the end of the list
+* for lessons learned, mention how on aws we had to limit the ports in order to
+  comply with the security group settings
+* how do you lookup a registered process across a cluster? this is necessary to
+  demonstrate the mod_restful_debug module.
+
+
+
+"Our lack of understanding of these things made it difficult for us to quickly
+ understand the code."
+
+
+
 add rake tasks for the REST calls
   GET  occupants, messages
   POST message to room
