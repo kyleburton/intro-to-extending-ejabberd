@@ -1,3 +1,7 @@
+* Add: = is not assignment to the 'gotchas' list
+  it's not assignment, it's an assertion that can introduce
+  variable bindings, this is the same feature you see in function definitions
+
 * Typo on slide #3 messags
 * Typo on slide #23 atable
 * add github url to slides
