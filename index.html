@@ -41,7 +41,7 @@
 					<h1>Introduction to Extending eJabberd</h1>
 					<h3>Using Erlang for the first time</h3>
 					<p>
-						<small><a href="http://github.com/kyleburton">Kyle Burton</a> / <a href="http://twitter.com/kyleburton">@kyleburton</a></small>
+          <small><a href="http://github.com/kyleburton"><span data-title="Kyle Burton">Kyle Burton</span></a> / <a href="http://twitter.com/kyleburton"><span data-title="@kyleburton">@kyleburton</span></a></small>
 					</p>
 				</section>
 
@@ -73,7 +73,7 @@
 					<h2>eJabberd Extended</h2>
           <ul>
             <li>See who is in a room</li>
-            <li>Peek at the messags in a room</li>
+            <li>Peek at the messages in a room</li>
             <li>Post a message to a room on behalf of a user</li>
             <li>Pre-create Rooms</li>
             <li>Create user credentials</li>
@@ -268,11 +268,12 @@
 					<h2>Lessons Learned</h2>
           <ul>
             <li>Erlang Cookie</li>
+            <li>proplists</li>
             <li>JSON in a land with no string</li>
-            <li>mod_restful_debug</li>
             <li>REPL</li>
             <li>Remote Shell</li>
             <li><code>ejabberdctl live</code></li>
+            <li>mod_restful_debug</li>
           </ul>
 
 					<aside class="notes">
@@ -303,26 +304,32 @@
 				</section>
 
 				<section>
-					<h2>JSON</h2>
-          <p>
-          <code>mod_restful_mochijson2</code> was hard for us to see how it worked.
-          </p>
-          <p>
-          Not having The <code>string==list(integer)</code> equivalence in our heads added to the confusion.
-          </p>
+					<h2>proplists</h2>
+					<pre><code contenteditable>
+          [
+            {route, "/api/admin"},
+            {listen, "127.0.0.1"},
+            {port, 8088},
+            {api_key, "1tm6q0zy5lx5bj4.13h5rkokul2oqax8"},
+            {access_log, "/var/log/ackerman/access.log"},
+            {error_log, "/var/log/ackerman/error.log"}
+
+          ]
+					</code></pre>
 
 					<aside class="notes">
 						...
 					</aside>
 				</section>
 
+
 				<section>
-					<h2>mod_restful_debug</h2>
+					<h2>JSON</h2>
           <p>
-          We wrote a simple <code>gen_server</code> that held a dictionary so we could message it to store or retrieve data.  We then used this from inside the other code to capture values, and with <code>ejabberdctl debug</code> we could query and see the values.
+          <code>mod_restful_mochijson2</code> was hard for us to see how it worked.
           </p>
           <p>
-          This was a huge help to our productivity.
+          Not having the <code>string==list(integer)</code> equivalence in our heads added to the confusion.
           </p>
 
 					<aside class="notes">
@@ -389,9 +396,35 @@
 				</section>
 
 				<section>
+					<h2>mod_restful_debug</h2>
+          <br/>
+					<pre><code contenteditable>
+  % at the debug remote shell
+  mod_restful_debug:start().
+
+  post_message_to_room(RoomName, From, Message) ->
+    mod_restful_debug:store(post_message_params,[RoomName, From, Message]).
+    ...
+
+  % at the debug remote shell
+  mod_restful_debug:lookup(post_message_params).
+					</code></pre>
+
+					<aside class="notes">
+          <p>
+          We wrote a simple <code>gen_server</code> that held a dictionary so we could message it to store or retrieve data.  We then used this from inside the other code to capture values, and with <code>ejabberdctl debug</code> we could query and see the values.
+          </p>
+          <p>
+          This was a huge help to our productivity.
+          </p>
+					</aside>
+				</section>
+
+
+				<section>
 					<h2>Demo</h2>
           <p>
-            Go flail on the keyboard and make mistakes.
+            (Go flail on the keyboard and make mistakes.)
           </p>
 
 					<aside class="notes">
@@ -400,11 +433,11 @@
 				</section>
 
 				<section>
-          <ul>
-            <li>Extend Ejabberd</li>
-            <li>Add Modules</li>
-            <li>Code, Reload and Interact</li>
-            <li>mod_muc_room stores history in a dict not atable, so there is no persistance :(</li>
+          <ul style="list-style-type: none;">
+            <li>&#x2713; Extend Ejabberd</li>
+            <li>&#x2713; Add Modules</li>
+            <li>&#x2713; Code, Reload and Interact</li>
+            <li>&#x2717; mod_muc_room's history in ram == no persistance :(</li>
           </ul>
 
 					<aside class="notes">
@@ -414,7 +447,7 @@
 
 
 				<section>
-					<h2>Questions?</h2>
+          <p style="font-size: 10em;">?</p>
 
 					<aside class="notes">
 						...
@@ -433,6 +466,7 @@
 				<section>
 					<h2>References</h2>
           <ul>
+            <li>github.com/kyleburton/intro-to-extending-ejabberd</li>
             <li>erlang docs: http://www.erlang.org/doc/</li>
             <li>iolists: http://prog21.dadgum.com/70.html</li>
           </ul>
@@ -442,10 +476,17 @@
 					</aside>
 				</section>
 
-
 			</div>
 
 		</div>
+
+    <!--
+    <footer style="clear: both; display: block; position: absolute; bottom: 0; width: 100%; height: 2em;">
+      <div style="text-align: center; color: white; font-size: 1.5em;">
+        <a href="http://twitter.com/kyleburton">@kyleburton</a> / <a href="http://github.com/kyleburton">github.com/kyleburton</a>
+      </div>
+    </footer>
+    -->
 
 		<script src="software/reveal.js/lib/js/head.min.js"></script>
 		<script src="software/reveal.js/js/reveal.min.js"></script>
