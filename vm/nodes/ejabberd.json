@@ -1,0 +1,32 @@
+{
+  "limits": {
+    "limits": [
+      ["*", "soft", "nofile", "10240"]
+    ]
+  },
+  "erlang": {
+    "source": {
+      "url": "https://s3.amazonaws.com/rn-public/erlang/otp_src_R15B01.tar.gz"
+    }
+  },
+  "sysctl": {
+    "params": {
+      "fs": {
+        "file-max": 805939
+      }
+    }
+  },
+  "packages": [
+    "git",
+    "vim",
+    "emacs",
+    "curl",
+    "screen"
+  ],
+  "run_list": [
+    "recipe[sysctl]",
+    "recipe[limits]",
+    "recipe[packages]",
+    "recipe[erlang::source]"
+  ]
+}
