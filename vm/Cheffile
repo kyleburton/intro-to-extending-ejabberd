@@ -16,3 +16,4 @@ site 'http://community.opscode.com/api/v1'
 
 cookbook 'erlang', :git => 'git://github.com/relaynetwork/erlang.git'
 cookbook 'nginx', :git => 'git://github.com/opscode-cookbooks/nginx.git'
+cookbook 'sysctl', :git => 'https://github.com/onehealth-cookbooks/sysctl.git'
