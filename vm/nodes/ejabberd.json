@@ -27,6 +27,7 @@
     "recipe[sysctl]",
     "recipe[limits]",
     "recipe[packages]",
-    "recipe[erlang::source]"
+    "recipe[erlang::source]",
+    "recipe[ejabberd]"
   ]
 }
