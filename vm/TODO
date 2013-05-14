@@ -1,17 +1,28 @@
+GOAL: network of 2 nodes, use to demonstrate clustering the 2 erlang instances,
+      mnesia and ejabberd
+
 * TODO: have the downloads cache files into /tmp/vagrant-cache/tmp - then the
   donwloads will survive the vm's being destroyed and re-created.  This will
   speed up the process of sanding off and starting again from scratch.  Consider
   doing this for the bash_profile as well.
 
-* TODO: set up shared network in the 2 nodes
+* TODO: add host entries so the 2 nodes can see each other by logical name
     https://github.com/nickcanz/memcache_example/blob/master/Vagrantfile
+* TODO: set up ssh authorized_keys and a trust relationship between the 2 nodes
+* TODO: create an erlang cookie to be shared by both nodes for the jabber process
 
 * TODO: cookbook to install rvm
 * TODO: cookbook to install emacs configuration
 
+TODO: configure the 2 erlang nodes to be clustered
+
 * TODO: update the mod_debug code to be globally registered on the cluster so it
   can be called from and interacted from any of the nodes in the clsuter
 
+
+
+* DONE: set up shared network in the 2 nodes
+    https://github.com/nickcanz/memcache_example/blob/master/Vagrantfile
 * DONE: cookbook to install bash profile
 * DONE: create 2nd node's vm
 * DONE: cookbook: install ejabberd from source
@@ -19,8 +30,6 @@
 * DONE: put the limits and packages cookbooks into a github repo, 
     reference it from the Cheffile (librarian-chef)
 
-GOAL: network of 2 nodes, use to demonstrate clustering the 2 erlang instances,
-      mnesia and ejabberd
 
 
 
