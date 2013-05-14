@@ -14,6 +14,7 @@ site 'http://community.opscode.com/api/v1'
 #   :git => 'https://github.com/findsyou/cookbooks',
 #   :ref => 'postgresql-improvements'
 
-cookbook 'erlang', :git => 'git://github.com/relaynetwork/erlang.git'
-cookbook 'nginx', :git => 'git://github.com/opscode-cookbooks/nginx.git'
-cookbook 'sysctl', :git => 'https://github.com/onehealth-cookbooks/sysctl.git'
+cookbook 'erlang',    :git => 'git://github.com/relaynetwork/erlang.git'
+cookbook 'nginx',     :git => 'git://github.com/opscode-cookbooks/nginx.git'
+cookbook 'sysctl',    :git => 'https://github.com/onehealth-cookbooks/sysctl.git'
+cookbook 'ejabberd',  :git => 'git@github.com:kyleburton/chef-cookbooks.git',      :path => 'ejabberd'

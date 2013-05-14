@@ -32,6 +32,16 @@ GIT
       yum (>= 0.5.0)
 
 GIT
+  remote: git@github.com:kyleburton/chef-cookbooks.git
+  path: ejabberd
+  ref: master
+  sha: c65c0299ce5e0b8105172f62ef83d3170060a136
+  specs:
+    ejabberd (0.1.0)
+      build-essential (>= 0.0.0)
+      erlang (>= 0.0.0)
+
+GIT
   remote: https://github.com/onehealth-cookbooks/sysctl.git
   ref: master
   sha: 2ef57d69783d3c5db8be507d0ecc016f3d87583a
@@ -39,6 +49,7 @@ GIT
     sysctl (0.3.1)
 
 DEPENDENCIES
+  ejabberd (>= 0)
   erlang (>= 0)
   nginx (>= 0)
   sysctl (>= 0)
