@@ -33,6 +33,14 @@ GIT
 
 GIT
   remote: git@github.com:kyleburton/chef-cookbooks.git
+  path: bash_profile
+  ref: master
+  sha: 66f83da3d872ed1e8fe0f096ee66b4b87f54f11f
+  specs:
+    bash_profile (0.1.0)
+
+GIT
+  remote: git@github.com:kyleburton/chef-cookbooks.git
   path: ejabberd
   ref: master
   sha: c65c0299ce5e0b8105172f62ef83d3170060a136
@@ -49,6 +57,7 @@ GIT
     sysctl (0.3.1)
 
 DEPENDENCIES
+  bash_profile (>= 0)
   ejabberd (>= 0)
   erlang (>= 0)
   nginx (>= 0)

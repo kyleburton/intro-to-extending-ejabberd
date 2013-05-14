@@ -16,6 +16,9 @@
       }
     }
   },
+  "bash_profile": {
+    "users": ["vagrant"]
+  },
   "packages": [
     "git",
     "vim",
@@ -29,6 +32,7 @@
     "recipe[limits]",
     "recipe[packages]",
     "recipe[erlang::source]",
-    "recipe[ejabberd]"
+    "recipe[ejabberd]",
+    "recipe[bash_profile]"
   ]
 }
