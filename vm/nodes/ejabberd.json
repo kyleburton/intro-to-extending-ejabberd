@@ -21,7 +21,8 @@
     "vim",
     "emacs",
     "curl",
-    "screen"
+    "screen",
+    "libexpat1-dev"
   ],
   "run_list": [
     "recipe[sysctl]",
