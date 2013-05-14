@@ -1,12 +1,13 @@
 * TODO: set up shared network in the 2 nodes
+    https://github.com/nickcanz/memcache_example/blob/master/Vagrantfile
 
-* TODO: cookbook to install bash profile
 * TODO: cookbook to install rvm
 * TODO: cookbook to install emacs configuration
 
 * TODO: update the mod_debug code to be globally registered on the cluster so it
   can be called from and interacted from any of the nodes in the clsuter
 
+* DONE: cookbook to install bash profile
 * DONE: create 2nd node's vm
 * DONE: cookbook: install ejabberd from source
     http://www.process-one.net/downloads/ejabberd/2.1.12/ejabberd-2.1.12.tgz
