@@ -9,9 +9,15 @@ require 'multi_json'
 
 Vagrant::Config.run do |all_config|
 
-  [:ejabberd01, :ejabberd02].each do |node_name|
+
+  [{:name => :ejabberd01,
+    :ip   => '10.1.0.10'},
+   {:name => :ejabberd02,
+    :ip   => '10.1.0.11'} ].each do |node_config|
+    node_name = node_config[:name]
     all_config.vm.define node_name do |config|
       config.vm.box = "precise64"
+      config.vm.network :hostonly, node_config[:ip], :netmask => "255.255.0.0"
       vagrant_json = MultiJson.load(Pathname(__FILE__).dirname.join('nodes', 'ejabberd.json').read)
 
       config.vm.provision :chef_solo do |chef|

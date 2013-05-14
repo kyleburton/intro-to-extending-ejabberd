@@ -1,3 +1,8 @@
+* TODO: have the downloads cache files into /tmp/vagrant-cache/tmp - then the
+  donwloads will survive the vm's being destroyed and re-created.  This will
+  speed up the process of sanding off and starting again from scratch.  Consider
+  doing this for the bash_profile as well.
+
 * TODO: set up shared network in the 2 nodes
     https://github.com/nickcanz/memcache_example/blob/master/Vagrantfile
 
