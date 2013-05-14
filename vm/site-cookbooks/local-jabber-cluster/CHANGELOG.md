@@ -1,10 +1,10 @@
-# CHANGELOG for limits
+# CHANGELOG for local-jabber-cluster
 
-This file is used to list changes made in each version of limits.
+This file is used to list changes made in each version of local-jabber-cluster.
 
 ## 0.1.0:
 
-* Initial release of limits
+* Initial release of local-jabber-cluster
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
