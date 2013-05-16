@@ -8,7 +8,6 @@ GOAL: network of 2 nodes, use to demonstrate clustering the 2 erlang instances,
 
 * TODO: add host entries so the 2 nodes can see each other by logical name
     https://github.com/nickcanz/memcache_example/blob/master/Vagrantfile
-* TODO: set up ssh authorized_keys and a trust relationship between the 2 nodes
 * TODO: create an erlang cookie to be shared by both nodes for the jabber process
 
 * TODO: cookbook to install rvm
@@ -21,6 +20,7 @@ TODO: configure the 2 erlang nodes to be clustered
 
 
 
+* NOT NEEDED: set up ssh authorized_keys and a trust relationship between the 2 nodes
 * DONE: set up shared network in the 2 nodes
     https://github.com/nickcanz/memcache_example/blob/master/Vagrantfile
 * DONE: cookbook to install bash profile

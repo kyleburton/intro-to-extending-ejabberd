@@ -27,12 +27,18 @@
     "screen",
     "libexpat1-dev"
   ],
+  "local-jabber-cluster": {
+    "users": [
+        {"name": "vagrant"}
+    ]
+  },
   "run_list": [
     "recipe[sysctl]",
     "recipe[limits]",
     "recipe[packages]",
     "recipe[erlang::source]",
     "recipe[ejabberd]",
-    "recipe[bash_profile]"
+    "recipe[bash_profile]",
+    "recipe[local-jabber-cluster]"
   ]
 }

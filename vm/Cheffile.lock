@@ -7,7 +7,7 @@ SITE
     runit (1.1.4)
       build-essential (>= 0.0.0)
       yum (>= 0.0.0)
-    yum (2.2.0)
+    yum (2.2.2)
 
 GIT
   remote: git://github.com/opscode-cookbooks/nginx.git
@@ -35,7 +35,7 @@ GIT
   remote: git@github.com:kyleburton/chef-cookbooks.git
   path: bash_profile
   ref: master
-  sha: 66f83da3d872ed1e8fe0f096ee66b4b87f54f11f
+  sha: 7bf3405df8e68730d4385a399fdba8187c5ea6ac
   specs:
     bash_profile (0.1.0)
 
@@ -43,11 +43,28 @@ GIT
   remote: git@github.com:kyleburton/chef-cookbooks.git
   path: ejabberd
   ref: master
-  sha: c65c0299ce5e0b8105172f62ef83d3170060a136
+  sha: 7bf3405df8e68730d4385a399fdba8187c5ea6ac
   specs:
     ejabberd (0.1.0)
       build-essential (>= 0.0.0)
       erlang (>= 0.0.0)
+
+GIT
+  remote: git@github.com:kyleburton/chef-cookbooks.git
+  path: limits
+  ref: master
+  sha: 7bf3405df8e68730d4385a399fdba8187c5ea6ac
+  specs:
+    limits (0.1.0)
+
+GIT
+  remote: git@github.com:kyleburton/chef-cookbooks.git
+  path: packages
+  ref: master
+  sha: 7bf3405df8e68730d4385a399fdba8187c5ea6ac
+  specs:
+    packages (0.1.0)
+      apt (>= 0.0.0)
 
 GIT
   remote: https://github.com/onehealth-cookbooks/sysctl.git
@@ -60,6 +77,8 @@ DEPENDENCIES
   bash_profile (>= 0)
   ejabberd (>= 0)
   erlang (>= 0)
+  limits (>= 0)
   nginx (>= 0)
+  packages (>= 0)
   sysctl (>= 0)
 

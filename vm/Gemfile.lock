@@ -66,6 +66,7 @@ GEM
       net-ssh-gateway
       net-ssh-multi
       trollop (~> 1.16.2)
+    snowleopard-ncurses (1.2.4)
     systemu (2.5.2)
     thor (0.18.1)
     trollop (1.16.2)
@@ -89,4 +90,5 @@ DEPENDENCIES
   librarian
   multi_json
   salticid
+  snowleopard-ncurses
   vagrant (~> 1.0.5)

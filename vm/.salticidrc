@@ -1,0 +1,19 @@
+role :ejabberd do
+  task :hello do
+    exec! 'hostname; uptime', echo: true
+  end
+
+  task :uptime do
+    exec! 'uptime', echo: true
+  end
+end
+
+group :ejabberd do
+  host 'ejabberd01'
+  host 'ejabberd02'
+
+  each_host do
+    user :vagrant
+    role :ejabberd
+  end
+end
