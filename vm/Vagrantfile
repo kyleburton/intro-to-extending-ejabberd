@@ -10,6 +10,8 @@ require 'multi_json'
 Vagrant::Config.run do |all_config|
 
 
+  # NB: if you're changing this list here, you will also need to edit the
+  # site-cookbooks/local-jabber-cluster recipe
   [{:name => :ejabberd01,
     :ip   => '10.1.0.10'},
    {:name => :ejabberd02,

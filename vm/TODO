@@ -1,6 +1,8 @@
 GOAL: network of 2 nodes, use to demonstrate clustering the 2 erlang instances,
       mnesia and ejabberd
 
+* TODO: create ejabberd user, set ownership appropriately
+
 * TODO: have the downloads cache files into /tmp/vagrant-cache/tmp - then the
   donwloads will survive the vm's being destroyed and re-created.  This will
   speed up the process of sanding off and starting again from scratch.  Consider
@@ -13,8 +15,8 @@ GOAL: network of 2 nodes, use to demonstrate clustering the 2 erlang instances,
 * TODO: cookbook to install rvm
 * TODO: cookbook to install emacs configuration
 
-TODO: configure the 2 erlang nodes to be clustered
 
+* TODO: configure the 2 erlang nodes to be clustered
 * TODO: update the mod_debug code to be globally registered on the cluster so it
   can be called from and interacted from any of the nodes in the clsuter
 
