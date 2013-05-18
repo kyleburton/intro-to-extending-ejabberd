@@ -1,17 +1,13 @@
 GOAL: network of 2 nodes, use to demonstrate clustering the 2 erlang instances,
       mnesia and ejabberd
 
-* TODO: create ejabberd user, set ownership appropriately
 
-* TODO: have the downloads cache files into /tmp/vagrant-cache/tmp - then the
-  donwloads will survive the vm's being destroyed and re-created.  This will
-  speed up the process of sanding off and starting again from scratch.  Consider
-  doing this for the bash_profile as well.
-
-* TODO: add host entries so the 2 nodes can see each other by logical name
-    https://github.com/nickcanz/memcache_example/blob/master/Vagrantfile
-* TODO: create an erlang cookie to be shared by both nodes for the jabber process
-
+* TODO: ejabberd configuration: set the nodename to ejabberd01 or ejabberd02
+        respectively (detect via the ip addr)
+* TODO: install mod_muc
+* TODO: install mod_restful_admin
+* TODO: install mod_restful_debug
+* TODO: set up rake tasks for rapid iteration, code reloading, debugging, etc
 * TODO: cookbook to install rvm
 * TODO: cookbook to install emacs configuration
 
@@ -19,9 +15,15 @@ GOAL: network of 2 nodes, use to demonstrate clustering the 2 erlang instances,
 * TODO: configure the 2 erlang nodes to be clustered
 * TODO: update the mod_debug code to be globally registered on the cluster so it
   can be called from and interacted from any of the nodes in the clsuter
+* TODO: have the downloads cache files into /tmp/vagrant-cache/tmp - then the
+  donwloads will survive the vm's being destroyed and re-created.  This will
+  speed up the process of sanding off and starting again from scratch.  Consider
+  doing this for the bash_profile as well.
 
-
-
+* DONE: add host entries so the 2 nodes can see each other by logical name
+    https://github.com/nickcanz/memcache_example/blob/master/Vagrantfile
+* DONE: create an erlang cookie to be shared by both nodes for the jabber process
+* DONE: create ejabberd user, set ownership appropriately for the jabber service
 * NOT NEEDED: set up ssh authorized_keys and a trust relationship between the 2 nodes
 * DONE: set up shared network in the 2 nodes
     https://github.com/nickcanz/memcache_example/blob/master/Vagrantfile

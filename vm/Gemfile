@@ -5,7 +5,7 @@ if `uname` =~ /Darwin/
 else
   gem 'ncurses'
 end
-gem 'salticid'
+#gem 'salticid'
 gem 'knife-solo'
 gem 'librarian'
 gem 'ffi', '~> 1.2.0'

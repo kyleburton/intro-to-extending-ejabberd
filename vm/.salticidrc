@@ -1,10 +1,25 @@
 role :ejabberd do
+  task :start do
+    exec! 'sudo -u ejabberd /usr/local/ejabberd-2.1.12/sbin/ejabberdctl start', :echo => true
+  end
+
+  task :status do
+    exec! 'sudo -u ejabberd /usr/local/ejabberd-2.1.12/sbin/ejabberdctl status', :echo => true
+  end
+
   task :hello do
     exec! 'hostname; uptime', echo: true
   end
 
+end
+
+role :stat do
   task :uptime do
     exec! 'uptime', echo: true
+  end
+
+  task :hostname do
+    exec! 'hostname', echo: true
   end
 end
 
@@ -15,5 +30,6 @@ group :ejabberd do
   each_host do
     user :vagrant
     role :ejabberd
+    role :stat
   end
 end
