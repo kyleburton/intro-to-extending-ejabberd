@@ -80,3 +80,42 @@ bash "git clone https://github.com/kyleburton/intro-to-extending-ejabberd.git" d
   test -d intro-to-extending-ejabberd || git clone https://github.com/kyleburton/intro-to-extending-ejabberd.git
 END
 end
+
+file "/home/vagrant/init-dev-env.sh" do 
+  owner   "vagrant"
+  group   "vagrant"
+  mode    0755
+  content <<-END
+  . ~/.bashrc
+  if (rvm list | grep ree); then
+    echo "ree present"
+  else
+    rvm install ree-1.8.7
+    rvm use --default ree
+  fi
+
+  if (rvm list | grep 1.9.3); then
+    echo "1.9.3 present"
+  else
+    rvm install 1.9.3
+    rvm use --default 1.9.3
+  fi
+END
+end
+
+bash "install rvm ree" do
+  cwd "/home/vagrant"
+  code <<-END
+  su -c 'bash /home/vagrant/init-dev-env.sh' - vagrant
+END
+end
+
+# bash "setup jabber dev environment" do
+#   cwd "/home/vagrant/projects/intro-to-extending-ejabberd/vm"
+#   code <<-END
+#   pwd
+#   su -c 'cd /home/vagrant/projects/intro-to-extending-ejabberd/vm; bundle install' - vagrant
+# END
+# end
+# 
+# 

@@ -12,10 +12,16 @@ Vagrant::Config.run do |all_config|
 
   # NB: if you're changing this list here, you will also need to edit the
   # site-cookbooks/local-jabber-cluster recipe
-  [{:name => :ejabberd01,
-    :ip   => '10.1.0.10'},
-   {:name => :ejabberd02,
-    :ip   => '10.1.0.11'} ].each do |node_config|
+  [{:name  => :ejabberd01,
+    :ip    => '10.1.0.10',
+    :ports => {5222 => 6222,
+               5223 => 6223}},
+
+   {:name  => :ejabberd02,
+    :ip    => '10.1.0.11',
+    :ports => {5222 => 7222,
+               5223 => 7223}} 
+  ].each do |node_config|
     node_name = node_config[:name]
     all_config.vm.define node_name do |config|
       config.vm.box = "precise64"
@@ -32,6 +38,11 @@ Vagrant::Config.run do |all_config|
           chef.add_recipe(recipe)
         end if vagrant_json['run_list']
       end
+
+      (node_config[:ports] || []).each do |vm_port, host_port|
+        config.vm.forward_port vm_port, host_port
+      end
+
     end
 
   end
