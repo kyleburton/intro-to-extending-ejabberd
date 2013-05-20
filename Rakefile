@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'json'
 require 'socket'
 require 'erb'
 # require 'ruby-debug'
@@ -23,6 +25,13 @@ $config = {
   },
   :api_key => "1l0gls94hajw24evjclz48e23k9l5q9zyt2feufhtitulyxzkoe"
 }
+
+if File.exist? ".config.json"
+  $config = JSON.parse(File.read(".config.json"))
+end
+
+puts "config: "
+pp $config
 
 def chdir! path
   unless File.exist? path
