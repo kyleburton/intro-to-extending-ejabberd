@@ -77,6 +77,6 @@ bash "git clone https://github.com/kyleburton/intro-to-extending-ejabberd.git" d
   code <<-END
   test -d projects || mkdir projects
   cd projects
-  git clone https://github.com/kyleburton/intro-to-extending-ejabberd.git
+  test -d intro-to-extending-ejabberd || git clone https://github.com/kyleburton/intro-to-extending-ejabberd.git
 END
 end

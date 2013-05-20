@@ -3,6 +3,7 @@ SITE
   specs:
     apt (1.9.2)
     build-essential (1.4.0)
+    chef_gem (0.1.0)
     ohai (1.1.8)
     runit (1.1.4)
       build-essential (>= 0.0.0)
@@ -35,7 +36,7 @@ GIT
   remote: git@github.com:kyleburton/chef-cookbooks.git
   path: bash_profile
   ref: master
-  sha: 7bf3405df8e68730d4385a399fdba8187c5ea6ac
+  sha: bd86c85fac5c331ab9e7db999328e7be3c4b2d0c
   specs:
     bash_profile (0.1.0)
 
@@ -43,7 +44,7 @@ GIT
   remote: git@github.com:kyleburton/chef-cookbooks.git
   path: ejabberd
   ref: master
-  sha: 7bf3405df8e68730d4385a399fdba8187c5ea6ac
+  sha: bd86c85fac5c331ab9e7db999328e7be3c4b2d0c
   specs:
     ejabberd (0.1.0)
       build-essential (>= 0.0.0)
@@ -53,7 +54,7 @@ GIT
   remote: git@github.com:kyleburton/chef-cookbooks.git
   path: limits
   ref: master
-  sha: 7bf3405df8e68730d4385a399fdba8187c5ea6ac
+  sha: bd86c85fac5c331ab9e7db999328e7be3c4b2d0c
   specs:
     limits (0.1.0)
 
@@ -61,10 +62,18 @@ GIT
   remote: git@github.com:kyleburton/chef-cookbooks.git
   path: packages
   ref: master
-  sha: 7bf3405df8e68730d4385a399fdba8187c5ea6ac
+  sha: bd86c85fac5c331ab9e7db999328e7be3c4b2d0c
   specs:
     packages (0.1.0)
       apt (>= 0.0.0)
+
+GIT
+  remote: https://github.com/kyleburton/chef-rvm.git
+  ref: master
+  sha: 7038fb8c518d0d7785767de215b1ae463f237973
+  specs:
+    rvm (0.9.1)
+      chef_gem (>= 0.0.0)
 
 GIT
   remote: https://github.com/onehealth-cookbooks/sysctl.git
@@ -80,5 +89,6 @@ DEPENDENCIES
   limits (>= 0)
   nginx (>= 0)
   packages (>= 0)
+  rvm (>= 0)
   sysctl (>= 0)
 

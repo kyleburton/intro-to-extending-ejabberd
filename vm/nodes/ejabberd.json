@@ -32,6 +32,14 @@
         {"name": "vagrant"}
     ]
   },
+  "rvm": {
+    "user_installs": [
+      {"user":         "vagrant",
+       "default_ruby": "ree-1.8.7-2012.02",
+       "install_rubies": true,
+       "rubies":       ["1.8.7", "1.9.3"] }
+    ]
+  },
   "run_list": [
     "recipe[sysctl]",
     "recipe[limits]",
@@ -39,6 +47,7 @@
     "recipe[erlang::source]",
     "recipe[ejabberd]",
     "recipe[bash_profile]",
-    "recipe[local-jabber-cluster]"
+    "recipe[local-jabber-cluster]",
+    "recipe[rvm::user]"
   ]
 }
