@@ -2,6 +2,7 @@ require 'rubygems'
 require 'json'
 require 'socket'
 require 'erb'
+require 'pp'
 # require 'ruby-debug'
 
 # see http://stackoverflow.com/questions/3242470/problem-using-openstruct-with-erb
@@ -27,7 +28,8 @@ $config = {
 }
 
 if File.exist? ".config.json"
-  $config = JSON.parse(File.read(".config.json"))
+  puts "Loading configuration from .config.json"
+  $config = JSON.parse(File.read(".config.json"), :symbolize_names => true)
 end
 
 puts "config: "
@@ -164,23 +166,27 @@ end
 
 desc "build"
 task :build do
-  chdir! "software/build/ejabberd/src/mod_muc" do
+  jabber_src_path  = $config[:jabber_src_path]  || "#{File.dirname(__FILE__)}/software/build/ejabberd-2.1.12/src"
+  jabber_ebin_path = $config[:jabber_ebin_path] || "#{File.dirname(__FILE__)}/software/ejabberd/lib/ejabberd/ebin/"
+  muc_src_path     = "#{jabber_src_path}/mod_muc"
+
+  #chdir! "software/build/ejabberd/src/mod_muc" do
+  chdir! muc_src_path do
     system! "make"
   end
 
-  jabber_src_path = "#{File.dirname(__FILE__)}/software/build/ejabberd-2.1.12/src"
-  include_dirs = %W[#{jabber_src_path} #{File.dirname(__FILE__)}/software/build/ejabberd-2.1.12/src/mod_muc]
+  include_dirs = %W[#{jabber_src_path} #{muc_src_path}]
   ejabberd_includes = include_dirs.map {|d| "-I #{d}"}.join(" ")
   chdir! "src" do
     cmd = "erlc #{ejabberd_includes} *.erl"
     system! cmd
-    system! "cp *.beam #{File.dirname(__FILE__)}/software/ejabberd/lib/ejabberd/ebin/"
+    system! "sudo cp *.beam #{jabber_ebin_path}"
   end
 
   chdir! "software/build/mod_restful/src" do
     cmd = "erlc #{ejabberd_includes} -pa #{jabber_src_path} -pa . -I .. -I ../include *.erl"
     system! cmd
-    system! "cp *.beam #{File.dirname(__FILE__)}/software/ejabberd/lib/ejabberd/ebin/"
+    system! "sudo cp *.beam #{jabber_ebin_path}"
   end
 
   puts "nl(muc_interact)."
