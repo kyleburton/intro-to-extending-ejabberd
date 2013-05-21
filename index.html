@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Introduction to Extending eJabberd</title>
+		<title>Introduction to Extending ejabberd</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -38,7 +38,7 @@
 			<div class="slides">
 
 				<section>
-					<h1>Introduction to Extending eJabberd</h1>
+					<h1>Introduction to Extending ejabberd</h1>
 					<h3>Using Erlang for the first time</h3>
 					<p>
           <small><a href="http://github.com/kyleburton"><span data-title="Kyle Burton">Kyle Burton</span></a> / <a href="http://twitter.com/kyleburton"><span data-title="@kyleburton">@kyleburton</span></a></small>
@@ -46,40 +46,79 @@
 				</section>
 
 				<section>
-					<h2>Incorporate Chat Into Our Product</h2>
-					<ul>
-						<li>Quickly: Use Standard Software</li>
-						<li>Be Robust: Support Clustering and HA</li>
-						<li>Support multi-person Rooms</li>
+					<h1>Hi</h1>
+          <small><p>I'm Kyle Burton,</p><p>the Head of Technology @ Relay Network</p></small>
+				</section>
+
+				<section>
+					<h2>Incorporate Chat</h2>
+					<ul style="list-style-type: none;">
+						<li>Quickly &rarr; Use Standard Software</li>
+						<li>Be Robust &rarr; Support Clustering and HA</li>
+						<li>Need &rarr; Support multi-person Chat Rooms</li>
 					</ul>
 
 					<aside class="notes">
-						These were our requirements.
+            We wanted to incorporate chat into our product.
+						These were our initial requirements.
 					</aside>
 				</section>
 
 				<section>
-					<h2>eJabberd</h2>
-          <p>
-            Met all of our initial requirements, then things changed...
-          </p>
-
-					<aside class="notes">
-						Time went by.
-					</aside>
-				</section>
-
-				<section>
-					<h2>eJabberd Extended</h2>
-          <ul>
-            <li>See who is in a room</li>
-            <li>Peek at the messages in a room</li>
-            <li>Post a message to a room on behalf of a user</li>
-            <li>Pre-create Rooms</li>
-            <li>Create user credentials</li>
+					<h2>ejabberd</h2>
+          <ul style="list-style-type: none;">
+            <li>&nbsp;</li>
+            <li>&#x2713; Off the shelf</li>
+            <li>&#x2713; supports clustering and HA</li>
+            <li>&#x2713; suports rooms</li>
+            <li>&nbsp;</li>
+            <li>All good then&trade;?</li>
           </ul>
 
 					<aside class="notes">
+						Off the shelf
+					</aside>
+				</section>
+
+				<section>
+          <section>
+          <p>
+          ejabberd met all of our <i><u>initial</u></i> requirements&hellip;
+          </p>
+
+          <p>
+          &darr;
+          </p>
+
+          <aside class="notes">
+          Time went by.
+          </aside>
+          </section>
+
+          <section class="future">
+          <p>Of course then things changed.</p>
+          </section>
+        </section>
+
+				<section>
+					<h2>non-standard</h2>
+          <ul style="list-style-type: none;">
+            <li>&nbsp;</li>
+            <li>&rarr; See who is in a room</li>
+            <li>&rarr; Peek at the messages in a room</li>
+            <li>&rarr; Post a message to a room on behalf of a user</li>
+            <li>&rarr; Pre-create Rooms</li>
+            <li>&rarr; Create and update user credentials</li>
+            <li>&nbsp;</li>
+            <li>Without being connected or showing up in the room.</li>
+          </ul>
+
+					<aside class="notes">
+            <p>
+            Many of these features were necessary in order for us to test the software.
+            Some of these are supported by XMPP, but writing code against a
+            synchronous (RESTful) api is simpler.
+            </p>
             <p>
             If there is no counter party in the room for the user, we actively try to find one
             that is on-call and assign them to the room.
@@ -96,102 +135,69 @@
 				</section>
 
 				<section>
-					<h2>Choices Choices</h2>
+
           <p>
-          Do we use the existing tools and extend XMPP itself?  
-          
+					<h2 style="text-transform: none;">mod_restful_admin</h2>
           </p>
-          <p>
-          Do we create an alternate interface into eJabberd's
-          internals?
-          </p>
+
+          <ul style="list-style-type: none;">
+            <li>&nbsp;</li>
+            <li>&#x2713; Already Exists</li>
+            <li>&#x2713; RESTful Design</li>
+            <li>&#x2713; Already Supports Create user credentials</li>
+            <li>&nbsp;</li>
+            <li>At first glance it looked easy to extend</li>
+          </ul>
 
 					<aside class="notes">
 						Time went by.
 					</aside>
 				</section>
 
+
 				<section>
-					<h2>1: Extend XMPP</h2>
-          <ul>
-            <li>PRO: can use existing libs (bosh, smack)</li>
-            <li>CON: smack is flaky from the JVM</li>
-            <li>CON: normal users could make these calls</li>
-            <li>CON: may break standard clients (pidgin)</li>
-            <li>CON: mod_muc prevents the same user from joining the room multiple times (dealbreaker!)</li>
+					<h2>ejabberd Internals</h2>
+          <ul style="list-style-type: none;">
+            <li>&nbsp;</li>
+            <li>&#x2717; ejabberd is written in Erlang</li>
+            <li>&#x2717; ejabberd is built on OTP Behaviors</li>
+            <li>&nbsp;</li>
+            <li>I think I saw a spare Erlang in the back room.</li>
           </ul>
 
 					<aside class="notes">
-          The last one was a dealbreaker for us, we have a distributed,
-          concurrent system, we need to be able to execute these new features
-          from multiple application servers, perhaps concurrently.
-					</aside>
-				</section>
-
-				<section>
-					<h2>2: REST Api</h2>
-          <ul>
-            <li>PRO: easy to call into from the JVM</li>
-            <li>PRO: easy to map actions to RESTful URLs</li>
-            <li>PRO: mod_restul_admin has 1 of our required features already</li>
-            <li>CON: have to hack Erlang (PRO)</li>
-          </ul>
-
-					<aside class="notes">
-						...
-					</aside>
-				</section>
-
-				<section>
-					<h2>REST Api, I choose you!</h2>
-          <p>
-          Simplicity wins.
-          </p>
-
-					<aside class="notes">
-						...
-					</aside>
-				</section>
-
-				<section>
-					<h2>eJabberd Internals</h2>
-          <p>
-            eJabberd is built on Erlang's OTP Behaviors
-          </p>
-
-					<aside class="notes">
-						...
+						No one on my team had worked with Erlang before.  It is brand new to our team.
 					</aside>
 				</section>
 
 				<section>
 					<h2>OTP Behaviors</h2>
-          <ul>
-            <li>gen_sever</li>
-            <li>gen_fsm</li>
-            <li>gen_event</li>
-            <li>supervisor</li>
+          <ul style="list-style-type: none;">
+            <li>&#x2717; gen_sever</li>
+            <li>&#x2713; gen_fsm</li>
+            <li>&#x2717; gen_event</li>
+            <li>&#x2717; supervisor</li>
           </ul>
 
 					<aside class="notes">
-						...
+						The only behavior we need to talk about is gen_fsm, which is for creating finite state machines.  It turns out...
 					</aside>
 				</section>
 
 				<section>
-					<h2>gen_fsm</h2>
+					<h2 style="text-transform: none;">gen_fsm</h2>
           <br />
           <p>
           mod_muc_room is a gen_fsm.
           </p>
           <br />
           <p>
-            It has a state which contains what we need:
+            the room state contains:
           </p>
           <br />
-          <ul>
-            <li>list of users</li>
-            <li>message history</li>
+          <ul style="list-style-type: none;">
+            <li>&#x2713;list of users</li>
+            <li>&#x2713;message history</li>
           </ul>
 
 					<aside class="notes">
@@ -202,7 +208,7 @@
 				<section>
 					<h2>What now?</h2>
           <p>
-          All the pieces were now laid out for us, so how do we hack eJabberd and Erlang?
+          All the pieces were now laid out for us, so how do we hack ejabberd and Erlang?
           </p>
           <p>
           A strange new world awaited us...
@@ -214,10 +220,11 @@
 				</section>
 
 				<section>
-					<h2>Erlang: Language Semantics</h2>
+					<h2>Language Semantics</h2>
+          <!--<ul style="list-style-type: none;">-->
           <ul>
             <li>Expression Based</li>
-            <li>Single Assignment, [generally] Immutable Types</li>
+            <li>Single Assignment, Immutable Default Types</li>
             <li>Pattern Matching and Destructuring</li>
             <li>Function Clauses</li>
             <li>Syntax: comma, semi-colon; and period.</li>
@@ -227,8 +234,13 @@
 
           <aside class="notes">
           <code>
-            what is a string in Erlang?  a list of integers. <br />
+            My team has a good bit of experience with a functional language,
+            some of these concepts were familliar to us, some were not.
+
+            What is a string in Erlang?  _a list of integers_! <br />
+
             The repl will display a list as text if all the ints look like ascii values(!) <br />
+
             Demonstrate binary <br />
             &lt;&lt;"foof"&gt;&gt;.<br />
             different from a string (list of ints). <br />
@@ -239,7 +251,7 @@
 				</section>
 
 				<section>
-					<h2>Erlang: Runtime Semantics</h2>
+					<h2>Runtime Semantics</h2>
           <ul>
             <li>iolists</li>
             <li>recursion and process state</li>
@@ -304,7 +316,7 @@
 				</section>
 
 				<section>
-					<h2>proplists</h2>
+					<h2>Lesson: proplists</h2>
 					<pre><code contenteditable>
           [
             {route, "/api/admin"},
@@ -318,18 +330,26 @@
 					</code></pre>
 
 					<aside class="notes">
-						...
+          Erlang doesn't have syntax for a map like Ruby, Perl and Clojure do.  
+          The convention is to use what are called proplists.  proplists are a list
+          of two-tuples where the first part is an atom and the second is any value.
+          If you squint just right at one of these it looks like a key/value map.
 					</aside>
 				</section>
 
 
 				<section>
-					<h2>JSON</h2>
+					<h2>Lesson: JSON</h2>
+          <br/>
           <p>
-          <code>mod_restful_mochijson2</code> was hard for us to see how it worked.
+          Not easy for us to understand <code>mod_restful_mochijson2</code>
           </p>
+          <br/>
           <p>
-          Not having the <code>string==list(integer)</code> equivalence in our heads added to the confusion.
+          Not having the</p>
+          <code>string==list(integer)</code>
+          </p>
+          equivalence in our heads added to the confusion.
           </p>
 
 					<aside class="notes">
@@ -344,21 +364,23 @@
           </p>
 
 					<aside class="notes">
-						...
+            I like langauges that let you expirement and evolve you code.  I
+            tend to like REPLs (Read Eval Print Loop).
 					</aside>
 				</section>
 
 				<section>
 					<h2>ejabberdctl debug</h2>
           <p>
-          Having a remote shell that was directly interacting with the server was even better.
+          Having a remote shell that was directly interacting with the server was sublime.
           </p>
           <p>
           Between the remote shell and our debugging service, it was almost like swank.
           </p>
 
 					<aside class="notes">
-						...
+            Swank is part of the IDE we use for Clojure that lets us connect
+            our IDE to a running application that we don't shut down.
 					</aside>
 				</section>
 
@@ -367,10 +389,13 @@
           <p>
             This runs ejabberd in the foreground, not as a daemon.  This was invaluable when we broke the service at startup:
           </p>
-          <ul>
-            <li>we borked the configuration file</li>
-            <li>we messed up the nodename and couldn't connect the debug console</li>
-            <li>we tried to call a module:function that didn't exist.</li>
+          <ul style="list-style-type: none;">
+            <li>&nbsp;</li>
+            <li>&#x2717; we borked the configuration file</li>
+            <li>&#x2717; we messed up the nodename and couldn't run the console</li>
+            <li>&#x2717; we tried to call a module:function that didn't exist</li>
+            <li>&nbsp;</li>
+            <li>&#x2713; we <u>never</u> crashed ejabberd</li>
           </ul>
 
 					<aside class="notes">
