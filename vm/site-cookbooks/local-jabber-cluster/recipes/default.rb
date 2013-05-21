@@ -1,6 +1,6 @@
 local_jabber_cluster_config = node['local-jabber-cluster']||[]
 
-user_accounts = (local_jabber_cluster_config['users']||[])
+user_accounts = (local_jabber_cluster_config['users']||[]).dup
 mod_rest_api_key = local_jabber_cluster_config['api_key']||"52536c88-bf2b-11e2-b8c1-60c547986f44"
 
 # NB: this is available from ohai somewhere, we should have used it instead
@@ -118,4 +118,22 @@ end
 # END
 # end
 # 
-# 
+
+
+file "/home/vagrant/projects/intro-to-extending-ejabberd/.config.json" do 
+  owner   "vagrant"
+  group   "vagrant"
+  mode    0644
+  content <<-END
+{
+  "ejabberd":    { "url": "http://www.process-one.net/downloads/ejabberd/2.1.12/ejabberd-2.1.12.tgz"},
+  "api_key":     "1l0gls94hajw24evjclz48e23k9l5q9zyt2feufhtitulyxzkoe",
+  "mod_restful": {"git": "git@github.com:relaynetwork/mod_restful.git"},
+  "reveal.js":   {"git": "https://github.com/hakimel/reveal.js.git"},
+
+  "jabber_src_path":  "/tmp/vagrant-chef/ejabberd-2.1.12/src/",
+  "jabber_ebin_path": "/usr/local/ejabberd/lib/ejabberd/ebin"
+}
+END
+end
+
