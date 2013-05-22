@@ -159,3 +159,9 @@ h1. Tutorials
 * Mnesia: Clustering 2 Nodes
 
 
+
+h1. Photos
+
+http://www.flickr.com/photos/42336015@N00/5067418822/
+  "Donkey": Donkey-5067418822_6fde6e9e64_z.jpg
+
