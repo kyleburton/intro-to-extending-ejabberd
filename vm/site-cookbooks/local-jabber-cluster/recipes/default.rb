@@ -137,3 +137,10 @@ file "/home/vagrant/projects/intro-to-extending-ejabberd/.config.json" do
 END
 end
 
+
+bash "make vagrant the owner of /tmp/vagrant-chef/ejabberd-2.1.12/" do
+  cwd "/home/vagrant"
+  code <<-END
+  sudo chown -R vagrant.vagrant /tmp/vagrant-chef/ejabberd-2.1.12/
+END
+end
