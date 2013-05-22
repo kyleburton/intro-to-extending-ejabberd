@@ -32,8 +32,8 @@ if File.exist? ".config.json"
   $config = JSON.parse(File.read(".config.json"), :symbolize_names => true)
 end
 
-puts "config: "
-pp $config
+#puts "config: "
+#pp $config
 
 def chdir! path
   unless File.exist? path
@@ -170,12 +170,16 @@ task :build do
   jabber_ebin_path = $config[:jabber_ebin_path] || "#{File.dirname(__FILE__)}/software/ejabberd/lib/ejabberd/ebin/"
   muc_src_path     = "#{jabber_src_path}/mod_muc"
 
+  puts "jabber_src_path:   #{jabber_src_path}"
+  puts "jabber_ebin_path:  #{jabber_ebin_path}"
+  puts "muc_src_path:      #{muc_src_path}"
+
   #chdir! "software/build/ejabberd/src/mod_muc" do
   chdir! muc_src_path do
     system! "make"
   end
 
-  include_dirs = %W[#{jabber_src_path} #{muc_src_path}]
+  include_dirs = [jabber_src_path, muc_src_path]
   ejabberd_includes = include_dirs.map {|d| "-I #{d}"}.join(" ")
   chdir! "src" do
     cmd = "erlc #{ejabberd_includes} *.erl"
@@ -190,6 +194,7 @@ task :build do
   end
 
   puts "nl(muc_interact)."
+  puts "nl(mod_restful_admin)."
 end
 
 namespace :rest do
