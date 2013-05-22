@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Introduction to Extending ejabberd</title>
+		<title>Intro to Extending ejabberd</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -38,7 +38,7 @@
 			<div class="slides">
 
 				<section>
-					<h1>Introduction to Extending ejabberd</h1>
+					<h1>Intro to Extending ejabberd</h1>
 					<h3>Using Erlang for the first time</h3>
 					<p>
           <small><a href="http://github.com/kyleburton"><span data-title="Kyle Burton">Kyle Burton</span></a> / <a href="http://twitter.com/kyleburton"><span data-title="@kyleburton">@kyleburton</span></a></small>
@@ -51,18 +51,43 @@
 				</section>
 
 				<section>
+					<h2>Customer &harr; Business</h2>
+
+					<aside class="notes">
+            We help business and their customers communicate.  Our products
+            touch mobile, sms and web apps.  We recently 
+					</aside>
+				</section>
+
+        <section>
+				<section>
 					<h2>Incorporate Chat</h2>
-					<ul style="list-style-type: none;">
-						<li>Quickly &rarr; Use Standard Software</li>
-						<li>Be Robust &rarr; Support Clustering and HA</li>
-						<li>Need &rarr; Support multi-person Chat Rooms</li>
-					</ul>
+          <table style="margin: auto;">
+            <tr><td>Goal</td>     <td>&rarr;</td><td>Chat with <i>any</i> Business</td></tr>
+            <tr><td>Quickly</td>  <td>&rarr;</td><td>Use Standard Software</td></tr>
+            <tr><td>Be Robust</td><td>&rarr;</td><td>Support Clustering and HA</td></tr>
+            <tr><td>Also</td>     <td>&rarr;</td><td>Support Chat Rooms</td></tr>
+          </table>
 
 					<aside class="notes">
             We wanted to incorporate chat into our product.
 						These were our initial requirements.
 					</aside>
 				</section>
+
+          <section>
+            <img src="/imgs/photo-1.png" />
+          </section>
+
+          <section>
+            <img src="/imgs/photo-2.png" />
+          </section>
+
+          <section>
+            <img src="/imgs/photo-3.png" />
+          </section>
+
+        </section>
 
 				<section>
 					<h2>ejabberd</h2>
@@ -98,6 +123,7 @@
           <section class="future">
           <p>Of course then things changed.</p>
           </section>
+
         </section>
 
 				<section>
@@ -110,8 +136,10 @@
             <li>&rarr; Pre-create Rooms</li>
             <li>&rarr; Create and update user credentials</li>
             <li>&nbsp;</li>
-            <li>Without being connected or showing up in the room.</li>
+            <li>Without being <i>connected</i> or <i>showing up</i> in the room.</li>
           </ul>
+
+          <p>(necessary to automate testing)</p>
 
 					<aside class="notes">
             <p>
@@ -135,18 +163,30 @@
 				</section>
 
 				<section>
+					<h2>non-standard</h2>
+          <ul style="list-style-type: none;">
+            <li>&nbsp;</li>
+            <li>&#x2717; <i>Not</i> Supported by XMPP</li>
+            <li>&#x2717; Don't want to extend XMPP</li>
+            <li>&nbsp;</li>
+            <li>&#x2713; Found some codez on the internets&hellip;</li>
+          </ul>
+
+				</section>
+
+				<section>
 
           <p>
-					<h2 style="text-transform: none;">mod_restful_admin</h2>
+					  <h2 style="text-transform: none;">mod_restful_admin</h2>
           </p>
 
           <ul style="list-style-type: none;">
             <li>&nbsp;</li>
             <li>&#x2713; Already Exists</li>
             <li>&#x2713; RESTful Design</li>
-            <li>&#x2713; Already Supports Create user credentials</li>
+            <li>&#x2713; Already Supports Creation of users</li>
             <li>&nbsp;</li>
-            <li>At first glance it looked easy to extend</li>
+            <li>At first glance it looked easy to extend&hellip;</li>
           </ul>
 
 					<aside class="notes">
@@ -154,6 +194,20 @@
 					</aside>
 				</section>
 
+				<section>
+					<h3>One of many WTF moments</h3>
+          <br/>
+          <pre style="font-size: 1.0em;"><code data-trim>
+       X = [72,101,108,108,111].
+
+       X == "Hello".  % =&gt; true
+
+</code></pre>
+          <ul style="list-style-type: none;">
+            <li>&nbsp;</li>
+            <li>That is the string "Hello"</li>
+          </ul>
+				</section>
 
 				<section>
 					<h2>ejabberd Internals</h2>
@@ -162,7 +216,7 @@
             <li>&#x2717; ejabberd is written in Erlang</li>
             <li>&#x2717; ejabberd is built on OTP Behaviors</li>
             <li>&nbsp;</li>
-            <li>I think I saw a spare Erlang in the back room.</li>
+            <li>I think I saw a talk about Erlang once.</li>
           </ul>
 
 					<aside class="notes">
@@ -229,7 +283,7 @@
             <li>Function Clauses</li>
             <li>Syntax: comma, semi-colon; and period.</li>
             <li>Data Types: atoms, numbers, lists, tuples, binaries, pid, function</li>
-            <li><u>There is no <b><i>String</i></b> type!</u></li>
+            <li>There is <i>no</i> <b><u>String</u></b> type!</li>
           </ul>
 
           <aside class="notes">
@@ -257,7 +311,9 @@
             <li>recursion and process state</li>
             <li>processes</li>
             <li>message passing</li>
+            <!--
             <li>the mnesia distributed database</li>
+            -->
             <li>code path</li>
             <li>hot reloading code</li>
             <li>upgrading a process</li>
@@ -282,10 +338,11 @@
             <li>Erlang Cookie</li>
             <li>proplists</li>
             <li>JSON in a land with no string</li>
-            <li>REPL</li>
+            <li>REPL / debug</li>
             <li>Remote Shell</li>
             <li><code>ejabberdctl live</code></li>
-            <li>mod_restful_debug</li>
+            <li>Hot Loading Code</li>
+            <li><code>mod_restful_debug</code></li>
           </ul>
 
 					<aside class="notes">
@@ -298,14 +355,19 @@
           <p>
           ejabberd didn't use
           </p> <br />
-          <p>
-          <code>$HOME/.erlang.cookie</code>
-          </p> <br />
+
+          <pre style="font-size: 0.9em;"><code>
+$HOME/.erlang.cookie
+
+</code></pre>
+
           <p>like all the other kids, it used
           </p> <br />
           <p>
-          <code>/var/lib/ejabberd/.erlang.cookie</code>
-          </p> <br />
+          <pre style="font-size: 0.9em;"><code>
+/var/lib/ejabberd/.erlang.cookie
+
+</code></pre>
           <p>
           instead :/
           </p>
@@ -317,16 +379,15 @@
 
 				<section>
 					<h2>Lesson: proplists</h2>
-					<pre><code contenteditable>
-          [
-            {route, "/api/admin"},
-            {listen, "127.0.0.1"},
-            {port, 8088},
-            {api_key, "1tm6q0zy5lx5bj4.13h5rkokul2oqax8"},
-            {access_log, "/var/log/ackerman/access.log"},
-            {error_log, "/var/log/ackerman/error.log"}
-
-          ]
+					<pre style="font-size: 0.7em;"><code data-trim>
+   [
+     {route, "/api/admin"},
+     {listen, "127.0.0.1"},
+     {port, 8088},
+     {api_key, "1tm6q0zy5lx5bj4.13h5rkokul2oqax8"},
+     {access_log, "/var/log/ackerman/access.log"},
+     {error_log, "/var/log/ackerman/error.log"}
+   ]
 					</code></pre>
 
 					<aside class="notes">
@@ -392,10 +453,10 @@
           <ul style="list-style-type: none;">
             <li>&nbsp;</li>
             <li>&#x2717; we borked the configuration file</li>
-            <li>&#x2717; we messed up the nodename and couldn't run the console</li>
+            <li>&#x2717; we messed up the nodename and couldn't use the debugger</li>
             <li>&#x2717; we tried to call a module:function that didn't exist</li>
             <li>&nbsp;</li>
-            <li>&#x2713; we <u>never</u> crashed ejabberd</li>
+            <li>&#x2713; we <u>never</u> crashed ejabberd though</li>
           </ul>
 
 					<aside class="notes">
@@ -406,13 +467,18 @@
 				<section>
 					<h2>Hotloading Code</h2>
           <p>
-          Recompile, copy the *.beam files into the proper place and then:
+          Compile, put the <code>.beam</code> files into the proper place and:
           </p>
+
+          <pre style="font-size: 0.8em;"><code data-trim>
+  &gt; l(module_name).
+  % or:
+  &gt; nl(module_name).
+
+</code></pre>
+
           <p>
-          <code>l(module_name).</code>
-          </p>
-          <p>
-          <code>nl(module_name).</code>
+          Allows for very Rapid Iteration&trade;
           </p>
 
 					<aside class="notes">
@@ -423,16 +489,24 @@
 				<section>
 					<h2>mod_restful_debug</h2>
           <br/>
-					<pre><code contenteditable>
-  % at the debug remote shell
-  mod_restful_debug:start().
+					<pre style="font-size: 0.7em;"><code data-trim>
+  <span style="color: grey">% at the debug shell</span>
+  &gt; mod_restful_debug:start().
 
-  post_message_to_room(RoomName, From, Message) ->
-    mod_restful_debug:store(post_message_params,[RoomName, From, Message]).
-    ...
+</code></pre>
 
-  % at the debug remote shell
-  mod_restful_debug:lookup(post_message_params).
+					<pre style="font-size: 0.7em;"><code data-trim>
+  <span style="color: grey">% modify a module to capture arguments</span>
+  process_rest(Req) -&gt;
+    <span style="color: cyan;"><i>mod_restful_debug:save(get_args, Req),</i></span>
+    case authorized(Req) of
+    &hellip;
+
+</code></pre>
+					<pre style="font-size: 0.7em;"><code data-trim>
+  <span style="color: grey">% at the debug shell</span>
+  &gt; l(mod_restful_debug).
+  &gt; mod_restful_debug:lookup(post_message_params).
 					</code></pre>
 
 					<aside class="notes">
@@ -449,7 +523,7 @@
 				<section>
 					<h2>Demo</h2>
           <p>
-            (Go flail on the keyboard and make mistakes.)
+            (go flail on the keyboard and make mistakes.)
           </p>
 
 					<aside class="notes">
