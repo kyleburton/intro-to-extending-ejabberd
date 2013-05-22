@@ -62,12 +62,16 @@
         <section>
 				<section>
 					<h2>Incorporate Chat</h2>
+          <br/>
           <table style="margin: auto;">
             <tr><td>Goal</td>     <td>&rarr;</td><td>Chat with <i>any</i> Business</td></tr>
-            <tr><td>Quickly</td>  <td>&rarr;</td><td>Use Standard Software</td></tr>
-            <tr><td>Be Robust</td><td>&rarr;</td><td>Support Clustering and HA</td></tr>
-            <tr><td>Also</td>     <td>&rarr;</td><td>Support Chat Rooms</td></tr>
+            <tr><td>Quickly</td>  <td>&rarr;</td><td>Off the Shelf Software</td></tr>
+            <tr><td>Be Robust</td><td>&rarr;</td><td>Clustering and HA</td></tr>
+            <tr><td>Also</td>     <td>&rarr;</td><td>Chat Rooms</td></tr>
           </table>
+          <br/>
+          <br/>
+          <p>&darr;</p>
 
 					<aside class="notes">
             We wanted to incorporate chat into our product.
@@ -90,14 +94,20 @@
         </section>
 
 				<section>
-					<h2>ejabberd</h2>
+
+          <!-- <h2>ejabberd</h2> -->
+          <img src="/imgs/ejabberd_logo.jpg" />
+          <br />
+
           <ul style="list-style-type: none;">
             <li>&nbsp;</li>
             <li>&#x2713; Off the shelf</li>
-            <li>&#x2713; supports clustering and HA</li>
-            <li>&#x2713; suports rooms</li>
+            <li>&#x2713; Standards Based: XMPP</li>
+            <li>&#x2713; Clustering and HA</li>
+            <li>&#x2713; Chat Rooms</li>
+            <li>&#x2713; Works with web apps</li>
             <li>&nbsp;</li>
-            <li>All good then&trade;?</li>
+            <li>So, are we All Good Then&trade;?</li>
           </ul>
 
 					<aside class="notes">
@@ -110,6 +120,9 @@
           <p>
           ejabberd met all of our <i><u>initial</u></i> requirements&hellip;
           </p>
+
+          <br />
+          <br />
 
           <p>
           &darr;
@@ -168,6 +181,7 @@
             <li>&nbsp;</li>
             <li>&#x2717; <i>Not</i> Supported by XMPP</li>
             <li>&#x2717; Don't want to extend XMPP</li>
+            <li>&#x2717; Prefer RESTful, Sync</li>
             <li>&nbsp;</li>
             <li>&#x2713; Found some codez on the internets&hellip;</li>
           </ul>
@@ -200,7 +214,6 @@
             <br/>
             <pre style="font-size: 0.9em;"><code data-trim>
          X = [72,101,108,108,111].
-  
   </code></pre>
           <br/>
           <p>Any Guess as to What this is?</p>
@@ -208,30 +221,32 @@
           </section>
 
           <section>
-            <div>
               <nobr>
 <!-- 640x480 => 512x384 -->
 <!-- 647x484 => 518x387 -->
                 <img width="512" height="384" src="/imgs/Donkey-5067418822_6fde6e9e64_z.jpg" />
                 <img width="512" height="384" src="/imgs/Key-3549285383_11de3317a6_z.jpg" />
               </nobr>
-            </div>
-            <p>Hint: "Ass"-"Key"</p>
-            <p>&darr;</p>
+            <p>(hint: "ass-key")</p>
+            <pre style="font-size: 0.9em;"><code data-trim>
+         X = [72,101,108,108,111].
+  </code></pre>
           </section>
-
 
           <section>
             <pre style="font-size: 0.9em;"><code data-trim>
-         X = [72,101,108,108,111].
-
-         X == "Hello".
+         X  = [72,101,108,108,111].
+         $H == 72.
+         X  == "Hello".
   
   </code></pre>
             <ul style="list-style-type: none;">
               <li>&nbsp;</li>
               <li>Yep, it's the string "Hello"</li>
             </ul>
+
+            <aside>
+            </aside>
 				  </section>
         </section>
 
@@ -241,6 +256,7 @@
             <li>&nbsp;</li>
             <li>&#x2717; ejabberd is written in Erlang</li>
             <li>&#x2717; ejabberd is built on OTP Behaviors</li>
+            <li>&#x2717; mod_muc &rarr; multi user chat extension</li>
             <li>&nbsp;</li>
             <li>I think I saw a talk about Erlang once.</li>
           </ul>
@@ -253,14 +269,16 @@
 				<section>
 					<h2>OTP Behaviors</h2>
           <ul style="list-style-type: none;">
-            <li>&#x2717; gen_sever</li>
+            <li>&#x2713; gen_server</li>
             <li>&#x2713; gen_fsm</li>
             <li>&#x2717; gen_event</li>
             <li>&#x2717; supervisor</li>
           </ul>
 
 					<aside class="notes">
-						The only behavior we need to talk about is gen_fsm, which is for creating finite state machines.  It turns out...
+            OTP is a framework that ships as part of Erlang that provides a strucutred way to build distributed applicaitons.
+
+						The only behaviors we need to talk about are gen_server and gen_fsm, which is for creating finite state machines.  It turns out...
 					</aside>
 				</section>
 
@@ -333,14 +351,14 @@
 				<section>
 					<h2>Runtime Semantics</h2>
           <ul>
-            <li>iolists</li>
-            <li>recursion and process state</li>
             <li>processes</li>
             <li>message passing</li>
+            <li>recursion and process state</li>
+            <li>iolists</li>
             <!--
             <li>the mnesia distributed database</li>
-            -->
             <li>code path</li>
+            -->
             <li>hot reloading code</li>
             <li>upgrading a process</li>
           </ul>
@@ -436,7 +454,7 @@ $HOME/.erlang.cookie
           Not having the</p>
           <code>string==list(integer)</code>
           </p>
-          equivalence in our heads added to the confusion.
+          equivalence in our heads only added to our confusion.
           </p>
 
 					<aside class="notes">
@@ -462,7 +480,7 @@ $HOME/.erlang.cookie
           Having a remote shell that was directly interacting with the server was sublime.
           </p>
           <p>
-          Between the remote shell and our debugging service, it was almost like swank.
+          Between the remote shell and our debugging service, it was almost equivalent to slime/swank.
           </p>
 
 					<aside class="notes">
@@ -498,7 +516,7 @@ $HOME/.erlang.cookie
 
           <pre style="font-size: 0.8em;"><code data-trim>
   &gt; l(module_name).
-  % or:
+  % or
   &gt; nl(module_name).
 
 </code></pre>
