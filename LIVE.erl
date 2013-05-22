@@ -1,3 +1,14 @@
+% connect to the running node (remote shell)
+
+% get the cookie
+erlang:get_cookie().
+
+% codepath
+code:get_path().
+
+% see first 10 parts of the path
+lists:sublist(code:get_path(),10).
+
 % Show Audium
 % join 'testroom'
 
@@ -27,11 +38,4 @@ mod_restful_debug:show_keys().
 mod_restful_debug:get(get_args).
 mod_restful_debug:get(post_args).
 
-% get the cookie
-erlang:get_cookie().
 
-% codepath
-code:get_path().
-
-% see first 10 parts of the path
-lists:sublist(code:get_path(),10).
